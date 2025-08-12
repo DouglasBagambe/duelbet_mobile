@@ -92,7 +92,6 @@ class _LichessScreenState extends State<LichessScreen>
     _initialTimeController.dispose();
     _incrementController.dispose();
     
-    // Remove challenge service listener
     ChallengeService.removeListener(_challengeListener);
     
     super.dispose();
