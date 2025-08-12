@@ -1,0 +1,17 @@
+name: duelbet_mobile_backend
+description: "Backend services for DuelBet mobile app"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  http: ^1.2.1
+  shelf: ^1.4.1
+  shelf_router: ^1.1.4
+  shelf_cors_headers: ^0.1.5
+  shelf_static: ^1.1.2
+
+dev_dependencies:
+  test: ^1.24.0
+  http_mock_adapter: ^0.6.1
