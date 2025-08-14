@@ -566,8 +566,8 @@ class _LichessScreenState extends State<LichessScreen>
                                           Expanded(
                                             child: ElevatedButton(
                                               onPressed: () async {
-                                                await _blockchainService.generateNewKeypair();
-                                                setState(() {});
+                                                // await _blockchainService.generateNewKeypair();
+                                                // setState(() {});
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 backgroundColor: Colors.orange.shade600,
