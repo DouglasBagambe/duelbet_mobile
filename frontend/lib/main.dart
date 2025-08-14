@@ -8,9 +8,15 @@ import 'screens/lichess_screen.dart';
 import 'screens/player_search_screen.dart';
 import 'components/menu_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeService(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,11 +24,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DuelBet',
-      theme: ThemeService.darkTheme,
-      home: const HomePage(),
-      debugShowCheckedModeBanner: false,
+    return Consumer<ThemeService>(
+      builder: (context, themeService, child) {
+        return MaterialApp(
+          title: 'DuelBet',
+          theme: themeService.darkTheme,
+          home: const HomePage(),
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }
@@ -110,159 +120,158 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-                              body: Stack(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color(0xFF0A0A0A),
-                      Color(0xFF1A1A2E),
-                      Color(0xFF16213E),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-                child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              children: [
-                const Spacer(flex: 2),
-                
-                // Logo/Title Section
-                FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Column(
-                    children: [
-                      Container(
-  width: 120,
-  height: 120,
-  decoration: BoxDecoration(
-    shape: BoxShape.circle,
-    gradient: const LinearGradient(
-      colors: [Color(0xFF6C5CE7), Color(0xFF00D2FF)],
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-    ),
-    boxShadow: [
-      BoxShadow(
-        color: const Color(0xFF6C5CE7).withOpacity(0.3),
-        blurRadius: 30,
-        spreadRadius: 0,
-      ),
-    ],
-  ),
-  // child: Padding(
-    // padding: const EdgeInsets.all(0), // adjust if needed
-    child: SvgPicture.asset(
-      'logo.svg',
-      fit: BoxFit.contain,
-    ),
-  // ),
-),
-                      const SizedBox(height: 24),
-                      ShaderMask(
-                        shaderCallback: (bounds) => const LinearGradient(
-                          colors: [Color(0xFF6C5CE7), Color(0xFF00D2FF)],
-                        ).createShader(bounds),
-                        child: const Text(
-                          'DuelBet',
-                          style: TextStyle(
-                            fontSize: 48,
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
-                            letterSpacing: -1,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Ultimate Dueling Platform on Solana',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white.withOpacity(0.7),
-                          fontWeight: FontWeight.w300,
-                          letterSpacing: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                
-                const Spacer(flex: 3),
-                
-                // Action Cards
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: ScaleTransition(
-                    scale: _scaleAnimation,
-                    child: Column(
-                      children: [
-                        _buildSleekCard(
-                          title: '1v1 DUEL',
-                          subtitle: 'Direct competition wagers',
-                          description: 'Create on-chain wagers with friends or opponents for any competition or challenge.',
-                          gradientColors: const [Color(0xFF6C5CE7), Color(0xFF8B5FBF)],
-                          icon: Icons.sports_mma,
-                          onTap: () => _navigateToScreen(context, const OneVOneScreen()),
-                        ),
-                        
-                        const SizedBox(height: 20),
-                        
-                        _buildSleekCard(
-                          title: 'LICHESS DUEL',
-                          subtitle: 'Chess warfare betting',
-                          description: 'Challenge players to epic chess battles on Lichess with crypto stakes.',
-                          gradientColors: const [Color(0xFF00D2FF), Color(0xFF3742FA)],
-                          icon: Icons.psychology,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LichessScreen(),
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF0A0A0A),
+                  Color(0xFF1A1A2E),
+                  Color(0xFF16213E),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    const Spacer(flex: 2),
+                    
+                    // Logo/Title Section
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 120,
+                            height: 120,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF6C5CE7), Color(0xFF00D2FF)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                
-                const Spacer(flex: 2),
-                
-                // Footer
-                FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Text.rich(
-                    TextSpan(
-                      text: 'Powered by ',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.4),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFF6C5CE7).withOpacity(0.3),
+                                  blurRadius: 30,
+                                  spreadRadius: 0,
+                                ),
+                              ],
+                            ),
+                            child: SvgPicture.asset(
+                              'logo.svg',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          ShaderMask(
+                            shaderCallback: (bounds) => const LinearGradient(
+                              colors: [Color(0xFF6C5CE7), Color(0xFF00D2FF)],
+                            ).createShader(bounds),
+                            child: const Text(
+                              'DuelBet',
+                              style: TextStyle(
+                                fontSize: 48,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                                letterSpacing: -1,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Ultimate Dueling Platform on Solana',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white.withOpacity(0.7),
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: 1,
+                            ),
+                          ),
+                        ],
                       ),
-                      children: [
+                    ),
+                    
+                    const Spacer(flex: 3),
+                    
+                    // Action Cards
+                    SlideTransition(
+                      position: _slideAnimation,
+                      child: ScaleTransition(
+                        scale: _scaleAnimation,
+                        child: Column(
+                          children: [
+                            _buildSleekCard(
+                              title: '1v1 DUEL',
+                              subtitle: 'Direct competition wagers',
+                              description: 'Create on-chain wagers with friends or opponents for any competition or challenge.',
+                              gradientColors: const [Color(0xFF6C5CE7), Color(0xFF8B5FBF)],
+                              icon: Icons.sports_mma,
+                              onTap: () => _navigateToScreen(context, const OneVOneScreen()),
+                            ),
+                            
+                            const SizedBox(height: 20),
+                            
+                            _buildSleekCard(
+                              title: 'LICHESS DUEL',
+                              subtitle: 'Chess warfare betting',
+                              description: 'Challenge players to epic chess battles on Lichess with crypto stakes.',
+                              gradientColors: const [Color(0xFF00D2FF), Color(0xFF3742FA)],
+                              icon: Icons.psychology,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LichessScreen(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    
+                    const Spacer(flex: 2),
+                    
+                    // Footer
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: Text.rich(
                         TextSpan(
-                          text: 'NileBit Labs',
+                          text: 'Powered by ',
                           style: TextStyle(
-                            color: Color(0xFFFFA500),
+                            color: Colors.white.withOpacity(0.4),
                             fontSize: 12,
                             fontWeight: FontWeight.w300,
                           ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              _launchURL('https://nilebitlabs.com');
-                            },
+                          children: [
+                            TextSpan(
+                              text: 'NileBit Labs',
+                              style: TextStyle(
+                                color: Color(0xFFFFA500),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  _launchURL('https://nilebitlabs.com');
+                                },
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 20),
+                  ],
                 ),
-                const SizedBox(height: 20),
-              ],
+              ),
             ),
           ),
           // Floating Menu Bar

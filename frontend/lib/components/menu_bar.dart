@@ -10,7 +10,7 @@ class AppMenuBar extends StatelessWidget {
   final VoidCallback? onBackPressed;
   final List<Widget>? actions;
 
-  const MenuBar({
+  const AppMenuBar({
     Key? key,
     this.title,
     this.showBackButton = false,
@@ -99,7 +99,7 @@ class AppMenuBar extends StatelessWidget {
 class FloatingAppMenuBar extends StatelessWidget {
   final VoidCallback? onSettingsPressed;
 
-  const FloatingMenuBar({
+  const FloatingAppMenuBar({
     Key? key,
     this.onSettingsPressed,
   }) : super(key: key);
@@ -167,12 +167,12 @@ class FloatingAppMenuBar extends StatelessWidget {
   }
 }
 
-// Bottom Menu Bar (alternative to top menu)
+// Bottom App Bar (for screens with bottom navigation)
 class BottomAppMenuBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
 
-  const BottomMenuBar({
+  const BottomAppMenuBar({
     Key? key,
     required this.currentIndex,
     required this.onTap,

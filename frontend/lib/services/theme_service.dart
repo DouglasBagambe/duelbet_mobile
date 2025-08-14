@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 
-// Simple theme service without Provider for now
-class ThemeService {
-  static const bool _isDarkMode = true; // Default to dark mode
+// Theme service that can be used with Provider
+class ThemeService extends ChangeNotifier {
+  bool _isDarkMode = true; // Default to dark mode
   
-  static bool get isDarkMode => _isDarkMode;
-  static ThemeMode get themeMode => _isDarkMode ? ThemeMode.dark : ThemeMode.light;
+  bool get isDarkMode => _isDarkMode;
+  ThemeMode get themeMode => _isDarkMode ? ThemeMode.dark : ThemeMode.light;
+  
+  // Method to toggle theme
+  Future<void> toggleTheme() async {
+    _isDarkMode = !_isDarkMode;
+    notifyListeners();
+  }
   
   // Dark theme colors (current theme)
-  static final ThemeData darkTheme = ThemeData(
+  static final ThemeData _darkThemeData = ThemeData(
     brightness: Brightness.dark,
     primarySwatch: Colors.blue,
     scaffoldBackgroundColor: const Color(0xFF0A0A0A),
@@ -49,7 +55,7 @@ class ThemeService {
   );
   
   // Light theme colors
-  static final ThemeData lightTheme = ThemeData(
+  static final ThemeData _lightThemeData = ThemeData(
     brightness: Brightness.light,
     primarySwatch: Colors.blue,
     scaffoldBackgroundColor: const Color(0xFFF8F9FA),
@@ -90,17 +96,26 @@ class ThemeService {
     ),
   );
   
-  static ThemeData get currentTheme => _isDarkMode ? darkTheme : lightTheme;
+  ThemeData get currentTheme => _isDarkMode ? _darkThemeData : _lightThemeData;
   
   // Get background color based on current theme
-  static Color get backgroundColor => _isDarkMode ? const Color(0xFF0A0A0A) : const Color(0xFFF8F9FA);
+  Color get backgroundColor => _isDarkMode ? const Color(0xFF0A0A0A) : const Color(0xFFF8F9FA);
   
   // Get surface color based on current theme
-  static Color get surfaceColor => _isDarkMode ? const Color(0xFF1A1A1A) : Colors.white;
+  Color get surfaceColor => _isDarkMode ? const Color(0xFF1A1A1A) : Colors.white;
+  
+  // Get card color based on current theme
+  Color get cardColor => _isDarkMode ? const Color(0xFF1A1A1A) : Colors.white;
   
   // Get text color based on current theme
-  static Color get textColor => _isDarkMode ? Colors.white : const Color(0xFF1A1A1A);
+  Color get textColor => _isDarkMode ? Colors.white : const Color(0xFF1A1A1A);
   
   // Get secondary text color based on current theme
-  static Color get secondaryTextColor => _isDarkMode ? Colors.white.withOpacity(0.7) : const Color(0xFF666666);
+  Color get secondaryTextColor => _isDarkMode ? Colors.white.withOpacity(0.7) : const Color(0xFF666666);
+  
+  // Get dark theme data
+  ThemeData get darkTheme => _darkThemeData;
+  
+  // Get light theme data
+  ThemeData get lightTheme => _lightThemeData;
 } 

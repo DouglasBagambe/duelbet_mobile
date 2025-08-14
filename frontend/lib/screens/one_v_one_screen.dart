@@ -24,29 +24,31 @@ class OneVOneScreen extends StatelessWidget {
               // Main Content
               Expanded(
                 child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const CreateWagerDialog();
-                  },
-                );
-              },
-              child: const Text('Create a New Duel'),
-            ),
-            const SizedBox(height: 20),
-            const Expanded(
-              child: QuickDuels(),
-            ),
-          ],
-        ),
-        ),
-      ),
-    );
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const CreateWagerDialog();
+                            },
+                          );
+                        },
+                        child: const Text('Create a New Duel'),
+                      ),
+                      const SizedBox(height: 20),
+                      const Expanded(
+                        child: QuickDuels(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }

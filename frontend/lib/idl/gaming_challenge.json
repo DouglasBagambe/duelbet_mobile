@@ -1,0 +1,180 @@
+{
+  "version": "0.1.0",
+  "name": "gaming_challenge",
+  "instructions": [
+    {
+      "name": "createChallenge",
+      "accounts": [
+        { "name": "challenge", "isMut": true, "isSigner": false },
+        { "name": "creator", "isMut": true, "isSigner": true },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "creatorTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "tokenMint", "isMut": false, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false },
+        { "name": "rent", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "wagerAmount", "type": "u64" },
+        { "name": "lichessGameId", "type": "string" },
+        { "name": "timeControl", "type": { "defined": "TimeControl" } }
+      ]
+    },
+    {
+      "name": "acceptChallenge",
+      "accounts": [
+        { "name": "challenge", "isMut": true, "isSigner": false },
+        { "name": "challenger", "isMut": true, "isSigner": true },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "challengerTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
+      "name": "completeChallenge",
+      "accounts": [
+        { "name": "challenge", "isMut": true, "isSigner": false },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "creatorTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "challengerTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "winner", "type": "publicKey" },
+        { "name": "lichessResult", "type": { "defined": "LichessResult" } }
+      ]
+    },
+    {
+      "name": "cancelChallenge",
+      "accounts": [
+        { "name": "challenge", "isMut": true, "isSigner": false },
+        { "name": "creator", "isMut": true, "isSigner": true },
+        { "name": "escrow", "isMut": true, "isSigner": false },
+        { "name": "creatorTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Challenge",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "creator", "type": "publicKey" },
+          { "name": "wagerAmount", "type": "u64" },
+          { "name": "lichessGameId", "type": "string" },
+          { "name": "timeControl", "type": { "defined": "TimeControl" } },
+          { "name": "isActive", "type": "u8" },
+          { "name": "challenger", "type": "publicKey" },
+          { "name": "isComplete", "type": "u8" },
+          { "name": "createdAt", "type": "i64" },
+          { "name": "winner", "type": "publicKey" },
+          { "name": "creatorClaimed", "type": "bool" },
+          { "name": "challengerClaimed", "type": "bool" },
+          { "name": "bump", "type": "u8" }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "TimeControl",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "initialTime", "type": "u32" },
+          { "name": "increment", "type": "u32" },
+          { "name": "variant", "type": { "defined": "GameVariant" } }
+        ]
+      }
+    },
+    {
+      "name": "LichessResult",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "gameId", "type": "string" },
+          { "name": "winner", "type": "string" },
+          { "name": "termination", "type": "string" },
+          { "name": "moves", "type": "string" },
+          { "name": "signature", "type": "string" }
+        ]
+      }
+    },
+    {
+      "name": "GameVariant",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          { "name": "Standard" },
+          { "name": "Chess960" },
+          { "name": "Crazyhouse" },
+          { "name": "Antichess" },
+          { "name": "Atomic" },
+          { "name": "Horde" },
+          { "name": "KingOfTheHill" },
+          { "name": "RacingKings" },
+          { "name": "ThreeCheck" }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ChallengeNotActive",
+      "msg": "Challenge is not active"
+    },
+    {
+      "code": 6001,
+      "name": "ChallengeAlreadyAccepted",
+      "msg": "Challenge already accepted"
+    },
+    {
+      "code": 6002,
+      "name": "ChallengeAlreadyComplete",
+      "msg": "Challenge already complete"
+    },
+    { "code": 6003, "name": "InvalidWinner", "msg": "Invalid winner" },
+    { "code": 6004, "name": "InvalidWager", "msg": "Invalid wager amount" },
+    {
+      "code": 6005,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient funds in the challenge account"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidWinnerAccount",
+      "msg": "Winner account is not a valid system account"
+    },
+    {
+      "code": 6007,
+      "name": "ChallengeNotOpen",
+      "msg": "Challenge is not open"
+    },
+    {
+      "code": 6008,
+      "name": "ChallengeComplete",
+      "msg": "Challenge is already complete"
+    },
+    {
+      "code": 6009,
+      "name": "ChallengeNotAccepted",
+      "msg": "Challenge has not been accepted yet"
+    },
+    { "code": 6010, "name": "Unauthorized", "msg": "Unauthorized action" },
+    {
+      "code": 6011,
+      "name": "TooEarlyToCancel",
+      "msg": "Too early to cancel challenge"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidLichessResult",
+      "msg": "Invalid Lichess result"
+    }
+  ]
+}

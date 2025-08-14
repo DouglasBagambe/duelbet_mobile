@@ -68,244 +68,250 @@ class _SettingsScreenState extends State<SettingsScreen>
               opacity: _fadeAnimation,
               child: SlideTransition(
                 position: _slideAnimation,
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Header
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () => Navigator.pop(context),
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              color: themeService.textColor,
-                              size: 24,
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Text(
-                              'Settings',
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w800,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Header
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () => Navigator.pop(context),
+                              icon: Icon(
+                                Icons.arrow_back_ios,
                                 color: themeService.textColor,
-                                letterSpacing: 0.5,
+                                size: 24,
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Text(
+                                'Settings',
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w800,
+                                  color: themeService.textColor,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 32),
+                        
+                        // Theme Section
+                        _buildSettingsSection(
+                          context: context,
+                          themeService: themeService,
+                          title: 'Appearance',
+                          icon: Icons.palette,
+                          iconColor: Colors.purple,
+                          children: [
+                            _buildThemeToggle(context, themeService),
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 24),
+                        
+                        // Account Section
+                        _buildSettingsSection(
+                          context: context,
+                          themeService: themeService,
+                          title: 'Account',
+                          icon: Icons.person,
+                          iconColor: Colors.blue,
+                          children: [
+                            _buildSettingsTile(
+                              context: context,
+                              themeService: themeService,
+                              title: 'Profile',
+                              subtitle: 'Manage your profile information',
+                              icon: Icons.person_outline,
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                // TODO: Navigate to profile
+                              },
+                            ),
+                            _buildSettingsTile(
+                              context: context,
+                              themeService: themeService,
+                              title: 'Wallet',
+                              subtitle: 'Connect and manage your wallet',
+                              icon: Icons.account_balance_wallet_outlined,
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                // TODO: Navigate to wallet
+                              },
+                            ),
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 24),
+                        
+                        // Notifications Section
+                        _buildSettingsSection(
+                          context: context,
+                          themeService: themeService,
+                          title: 'Notifications',
+                          icon: Icons.notifications,
+                          iconColor: Colors.orange,
+                          children: [
+                            _buildSettingsTile(
+                              context: context,
+                              themeService: themeService,
+                              title: 'Push Notifications',
+                              subtitle: 'Receive notifications for challenges',
+                              icon: Icons.notifications_outlined,
+                              onTap: null, // No action needed for switches
+                              trailing: Switch(
+                                value: true, // TODO: Get from settings
+                                onChanged: (value) {
+                                  HapticFeedback.lightImpact();
+                                  // TODO: Update notification settings
+                                },
+                                activeColor: Colors.blue.shade600,
+                              ),
+                            ),
+                            _buildSettingsTile(
+                              context: context,
+                              themeService: themeService,
+                              title: 'Email Notifications',
+                              subtitle: 'Receive email updates',
+                              icon: Icons.email_outlined,
+                              onTap: null, // No action needed for switches
+                              trailing: Switch(
+                                value: false, // TODO: Get from settings
+                                onChanged: (value) {
+                                  HapticFeedback.lightImpact();
+                                  // TODO: Update email settings
+                                },
+                                activeColor: Colors.blue.shade600,
+                              ),
+                            ),
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 24),
+                        
+                        // Support Section
+                        _buildSettingsSection(
+                          context: context,
+                          themeService: themeService,
+                          title: 'Support',
+                          icon: Icons.help,
+                          iconColor: Colors.green,
+                          children: [
+                            _buildSettingsTile(
+                              context: context,
+                              themeService: themeService,
+                              title: 'Help Center',
+                              subtitle: 'Get help and find answers',
+                              icon: Icons.help_outline,
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                // TODO: Open help center
+                              },
+                            ),
+                            _buildSettingsTile(
+                              context: context,
+                              themeService: themeService,
+                              title: 'Contact Support',
+                              subtitle: 'Get in touch with our team',
+                              icon: Icons.support_agent_outlined,
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                // TODO: Contact support
+                              },
+                            ),
+                            _buildSettingsTile(
+                              context: context,
+                              themeService: themeService,
+                              title: 'Privacy Policy',
+                              subtitle: 'Read our privacy policy',
+                              icon: Icons.privacy_tip_outlined,
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                // TODO: Show privacy policy
+                              },
+                            ),
+                            _buildSettingsTile(
+                              context: context,
+                              themeService: themeService,
+                              title: 'Terms of Service',
+                              subtitle: 'Read our terms of service',
+                              icon: Icons.description_outlined,
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                // TODO: Show terms of service
+                              },
+                            ),
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 24),
+                        
+                        // App Info Section
+                        _buildSettingsSection(
+                          context: context,
+                          themeService: themeService,
+                          title: 'App Info',
+                          icon: Icons.info,
+                          iconColor: Colors.grey,
+                          children: [
+                            _buildSettingsTile(
+                              context: context,
+                              themeService: themeService,
+                              title: 'Version',
+                              subtitle: '1.0.0',
+                              icon: Icons.info_outline,
+                              onTap: () {},
+                            ),
+                            _buildSettingsTile(
+                              context: context,
+                              themeService: themeService,
+                              title: 'Build Number',
+                              subtitle: '1',
+                              icon: Icons.build_outlined,
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 32),
+                        
+                        // Logout Button
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              HapticFeedback.mediumImpact();
+                              _showLogoutDialog(context, themeService);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red.shade600,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              elevation: 0,
+                            ),
+                            child: const Text(
+                              'Logout',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      
-                      const SizedBox(height: 32),
-                      
-                      // Theme Section
-                      _buildSettingsSection(
-                        context: context,
-                        themeService: themeService,
-                        title: 'Appearance',
-                        icon: Icons.palette,
-                        iconColor: Colors.purple,
-                        children: [
-                          _buildThemeToggle(context, themeService),
-                        ],
-                      ),
-                      
-                      const SizedBox(height: 24),
-                      
-                      // Account Section
-                      _buildSettingsSection(
-                        context: context,
-                        themeService: themeService,
-                        title: 'Account',
-                        icon: Icons.person,
-                        iconColor: Colors.blue,
-                        children: [
-                          _buildSettingsTile(
-                            context: context,
-                            themeService: themeService,
-                            title: 'Profile',
-                            subtitle: 'Manage your profile information',
-                            icon: Icons.person_outline,
-                            onTap: () {
-                              HapticFeedback.lightImpact();
-                              // TODO: Navigate to profile
-                            },
-                          ),
-                          _buildSettingsTile(
-                            context: context,
-                            themeService: themeService,
-                            title: 'Wallet',
-                            subtitle: 'Connect and manage your wallet',
-                            icon: Icons.account_balance_wallet_outlined,
-                            onTap: () {
-                              HapticFeedback.lightImpact();
-                              // TODO: Navigate to wallet
-                            },
-                          ),
-                        ],
-                      ),
-                      
-                      const SizedBox(height: 24),
-                      
-                      // Notifications Section
-                      _buildSettingsSection(
-                        context: context,
-                        themeService: themeService,
-                        title: 'Notifications',
-                        icon: Icons.notifications,
-                        iconColor: Colors.orange,
-                        children: [
-                          _buildSettingsTile(
-                            context: context,
-                            themeService: themeService,
-                            title: 'Push Notifications',
-                            subtitle: 'Receive notifications for challenges',
-                            icon: Icons.notifications_outlined,
-                            trailing: Switch(
-                              value: true, // TODO: Get from settings
-                              onChanged: (value) {
-                                HapticFeedback.lightImpact();
-                                // TODO: Update notification settings
-                              },
-                              activeColor: Colors.blue.shade600,
-                            ),
-                          ),
-                          _buildSettingsTile(
-                            context: context,
-                            themeService: themeService,
-                            title: 'Email Notifications',
-                            subtitle: 'Receive email updates',
-                            icon: Icons.email_outlined,
-                            trailing: Switch(
-                              value: false, // TODO: Get from settings
-                              onChanged: (value) {
-                                HapticFeedback.lightImpact();
-                                // TODO: Update email settings
-                              },
-                              activeColor: Colors.blue.shade600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      
-                      const SizedBox(height: 24),
-                      
-                      // Support Section
-                      _buildSettingsSection(
-                        context: context,
-                        themeService: themeService,
-                        title: 'Support',
-                        icon: Icons.help,
-                        iconColor: Colors.green,
-                        children: [
-                          _buildSettingsTile(
-                            context: context,
-                            themeService: themeService,
-                            title: 'Help Center',
-                            subtitle: 'Get help and find answers',
-                            icon: Icons.help_outline,
-                            onTap: () {
-                              HapticFeedback.lightImpact();
-                              // TODO: Open help center
-                            },
-                          ),
-                          _buildSettingsTile(
-                            context: context,
-                            themeService: themeService,
-                            title: 'Contact Support',
-                            subtitle: 'Get in touch with our team',
-                            icon: Icons.support_agent_outlined,
-                            onTap: () {
-                              HapticFeedback.lightImpact();
-                              // TODO: Contact support
-                            },
-                          ),
-                          _buildSettingsTile(
-                            context: context,
-                            themeService: themeService,
-                            title: 'Privacy Policy',
-                            subtitle: 'Read our privacy policy',
-                            icon: Icons.privacy_tip_outlined,
-                            onTap: () {
-                              HapticFeedback.lightImpact();
-                              // TODO: Show privacy policy
-                            },
-                          ),
-                          _buildSettingsTile(
-                            context: context,
-                            themeService: themeService,
-                            title: 'Terms of Service',
-                            subtitle: 'Read our terms of service',
-                            icon: Icons.description_outlined,
-                            onTap: () {
-                              HapticFeedback.lightImpact();
-                              // TODO: Show terms of service
-                            },
-                          ),
-                        ],
-                      ),
-                      
-                      const SizedBox(height: 24),
-                      
-                      // App Info Section
-                      _buildSettingsSection(
-                        context: context,
-                        themeService: themeService,
-                        title: 'App Info',
-                        icon: Icons.info,
-                        iconColor: Colors.grey,
-                        children: [
-                          _buildSettingsTile(
-                            context: context,
-                            themeService: themeService,
-                            title: 'Version',
-                            subtitle: '1.0.0',
-                            icon: Icons.info_outline,
-                            onTap: () {},
-                          ),
-                          _buildSettingsTile(
-                            context: context,
-                            themeService: themeService,
-                            title: 'Build Number',
-                            subtitle: '1',
-                            icon: Icons.build_outlined,
-                            onTap: () {},
-                          ),
-                        ],
-                      ),
-                      
-                      const Spacer(),
-                      
-                      // Logout Button
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            HapticFeedback.mediumImpact();
-                            _showLogoutDialog(context, themeService);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red.shade600,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: const Text(
-                            'Logout',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
                         ),
-                      ),
-                    ],
+                        
+                        const SizedBox(height: 32),
+                      ],
+                    ),
                   ),
                 ),
               ),
