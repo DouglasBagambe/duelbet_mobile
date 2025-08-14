@@ -114,48 +114,48 @@ class ChallengeService {
     if (_challenges.isNotEmpty) return; // Don't reload if already have challenges
     
     final sampleChallenges = [
-      Challenge(
-        id: '1',
-        creator: 'DrNykterstein',
-        wagerAmount: 0.5,
-        lichessGameId: 'abc123',
-        timeControl: {
-          'initialTime': 600,
-          'increment': 5,
-          'variant': 'standard',
-        },
-        status: 'pending',
-        createdAt: DateTime.now().subtract(const Duration(hours: 2)),
-      ),
-      Challenge(
-        id: '2',
-        creator: 'Hikaru',
-        challenger: 'Magnus',
-        wagerAmount: 1.0,
-        lichessGameId: 'def456',
-        timeControl: {
-          'initialTime': 300,
-          'increment': 3,
-          'variant': 'chess960',
-        },
-        status: 'active',
-        createdAt: DateTime.now().subtract(const Duration(hours: 1)),
-      ),
-      Challenge(
-        id: '3',
-        creator: 'Magnus',
-        challenger: 'Hikaru',
-        wagerAmount: 2.0,
-        lichessGameId: 'ghi789',
-        timeControl: {
-          'initialTime': 900,
-          'increment': 10,
-          'variant': 'atomic',
-        },
-        status: 'completed',
-        winner: 'Magnus',
-        createdAt: DateTime.now().subtract(const Duration(days: 1)),
-      ),
+      // Challenge(
+      //   id: '1',
+      //   creator: 'DrNykterstein',
+      //   wagerAmount: 0.5,
+      //   lichessGameId: 'abc123',
+      //   timeControl: {
+      //     'initialTime': 600,
+      //     'increment': 5,
+      //     'variant': 'standard',
+      //   },
+      //   status: 'pending',
+      //   createdAt: DateTime.now().subtract(const Duration(hours: 2)),
+      // ),
+      // Challenge(
+      //   id: '2',
+      //   creator: 'Hikaru',
+      //   challenger: 'Magnus',
+      //   wagerAmount: 1.0,
+      //   lichessGameId: 'def456',
+      //   timeControl: {
+      //     'initialTime': 300,
+      //     'increment': 3,
+      //     'variant': 'chess960',
+      //   },
+      //   status: 'active',
+      //   createdAt: DateTime.now().subtract(const Duration(hours: 1)),
+      // ),
+      // Challenge(
+      //   id: '3',
+      //   creator: 'Magnus',
+      //   challenger: 'Hikaru',
+      //   wagerAmount: 2.0,
+      //   lichessGameId: 'ghi789',
+      //   timeControl: {
+      //     'initialTime': 900,
+      //     'increment': 10,
+      //     'variant': 'atomic',
+      //   },
+      //   status: 'completed',
+      //   winner: 'Magnus',
+      //   createdAt: DateTime.now().subtract(const Duration(days: 1)),
+      // ),
     ];
 
     for (final challenge in sampleChallenges) {
