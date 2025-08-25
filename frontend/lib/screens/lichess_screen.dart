@@ -1249,6 +1249,7 @@ class _LichessScreenState extends State<LichessScreen>
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w700,
+                                                    // fontWeight: FontWeight.w700,
                                                   ),
                                                 ),
                                         ),
